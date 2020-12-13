@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useEffect} from 'react';
+import React, {Component} from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import keys from './constants/Keys';
@@ -9,12 +9,12 @@ Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize(keys.applicationId, keys.javascriptKey);
 Parse.serverURL = keys.serverURL;
 
-export default function App() {
-  useEffect(() => {
-    createInstallation();
-  }, []);
+export default class App extends Component {
+  componentDidMount() {
+    this.createInstallation();
+  }
 
-  async function createInstallation() {
+  createInstallation = async () => {
     const Installation = Parse.Object.extend(Parse.Installation);
     const installation = new Installation();
 
@@ -22,12 +22,15 @@ export default function App() {
 
     await installation.save();
   }
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Open up App.js to start working on your app!</Text>
+        <StatusBar style="auto" />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
