@@ -1,5 +1,7 @@
-import React from 'react';
-import { Platform, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import React, {Component} from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import keys from './constants/Keys';
 import Parse from "parse/react-native.js";
 
@@ -7,13 +9,8 @@ Parse.setAsyncStorage(AsyncStorage);
 Parse.initialize(keys.applicationId, keys.javascriptKey);
 Parse.serverURL = keys.serverURL;
 
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
-
-export default class App extends React.Component {
-  componentWillMount() {
+export default class App extends Component {
+  componentDidMount() {
     this.createInstallation();
   }
 
@@ -29,9 +26,8 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Text>Open up App.js to start working on your app!</Text>
+        <StatusBar style="auto" />
       </View>
     );
   }
@@ -40,18 +36,8 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    justifyContent: 'center',
   },
 });
